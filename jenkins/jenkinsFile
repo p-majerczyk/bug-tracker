@@ -1,17 +1,21 @@
-stage('Unit tests - backend') {
-    agent {
-        docker {
-            image 'snakee/golang-junit:1.21'
-            reuseNode true
-        }
-    }
-    environment {
-        GOPATH = "${WORKSPACE}/.go"
-        GOCACHE = "${WORKSPACE}/.go/cache"
-    }
-    steps {
-        dir('bugtracker-backend') {
-            sh 'go test -v ./...'
+pipeline {
+    agent none
+
+    stages {
+        stage('Unit tests - backend') {
+            agent {
+                docker {
+                    image 'snakee/golang-junit:1.21'
+                    reuseNode true
+                }
+            }
+            steps {
+                dir('bugtracker-backend') {
+                    withEnv(['GOPATH=/tmp/go', 'GOCACHE=/tmp/go/cache']) {
+                        sh 'go test -v ./...'
+                    }
+                }
+            }
         }
     }
 }
