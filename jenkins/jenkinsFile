@@ -25,7 +25,7 @@ pipeline {
                 }
             }
             steps {
-                dir('bugtracker-Frontend') {
+                dir('bugtracker-frontend') {
                     withEnv(['GOPATH=/tmp/go', 'GOCACHE=/tmp/go/cache']) {
                         sh '''
                         npm ci
