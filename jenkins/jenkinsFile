@@ -17,5 +17,23 @@ pipeline {
                 }
             }
         }
+         stage('Unit tests - frontend') {
+            agent {
+                docker {
+                    image 'node:20-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                dir('bugtracker-Frontend') {
+                    withEnv(['GOPATH=/tmp/go', 'GOCACHE=/tmp/go/cache']) {
+                        sh '''
+                        npm ci
+                        npm test
+                        '''
+                    }
+                }
+            }
+        }
     }
 }
