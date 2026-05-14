@@ -34,11 +34,13 @@ pipeline {
                 }
             }
         }
-    }  // ← stages closes here
+    }
 
-    post {  // ← post is now at pipeline level
+    post {
         always {
-            junit 'bugtracker-frontend/test-results.xml'
+            node('built-in') {         
+                junit 'bugtracker-frontend/test-results.xml'
+            }
         }
     }
 }
