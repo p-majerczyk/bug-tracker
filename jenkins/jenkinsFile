@@ -17,7 +17,8 @@ pipeline {
                 }
             }
         }
-         stage('Unit tests - frontend') {
+
+        stage('Unit tests - frontend') {
             agent {
                 docker {
                     image 'node:20-alpine'
@@ -26,19 +27,18 @@ pipeline {
             }
             steps {
                 dir('bugtracker-frontend') {
-                    withEnv(['GOPATH=/tmp/go', 'GOCACHE=/tmp/go/cache']) {
-                        sh '''
+                    sh '''
                         npm ci
                         npm test
-                        '''
-                    }
+                    '''
                 }
             }
         }
-        post {
-            always {
-                junit 'bugtracker-frontend/test-results.xml'
-            }
+    }  // ← stages closes here
+
+    post {  // ← post is now at pipeline level
+        always {
+            junit 'bugtracker-frontend/test-results.xml'
         }
     }
 }
