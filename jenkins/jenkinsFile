@@ -11,8 +11,7 @@ pipeline {
             }
             steps {
                 dir('bugtracker-backend') {
-                        sh 'go test -v ./...'
-                    }
+                    sh 'go test -v ./...'
                 }
             }
         }
@@ -32,12 +31,13 @@ pipeline {
                     '''
                 }
             }
-              post {
-                always {   
-                    junit 'bugtracker-frontend/test-results.xml'
-            }
         }
+    }
+
+    post {
+        always {
+            junit allowEmptyResults: true,
+                  testResults: 'bugtracker-frontend/test-results.xml'
         }
-    
     }
 }
