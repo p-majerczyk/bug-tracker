@@ -33,14 +33,12 @@ pipeline {
                     '''
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            node('built-in') {         
+              post {
+        always {   
                 junit 'bugtracker-frontend/test-results.xml'
             }
         }
+        }
+    
     }
 }
