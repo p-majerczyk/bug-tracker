@@ -11,7 +11,9 @@ pipeline {
             }
             steps {
                 dir('bugtracker-backend') {
-                    sh 'go test -v ./...'
+                    withEnv(['GOPATH=/tmp/go', 'GOCACHE=/tmp/go/cache']) {
+                        sh 'go test -v ./...'
+                    }
                 }
             }
         }
